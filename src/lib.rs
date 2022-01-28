@@ -1,7 +1,7 @@
 use std::{rc::Rc, ops::Deref};
 
 pub struct DigraphNode<T> {
-    next: DigraphNodeRef<T>,
+    pub next: DigraphNodeRef<T>, // I made it `pub` to be able `item.next.next()` to remove an item from the middle.
     data: T,
 }
 

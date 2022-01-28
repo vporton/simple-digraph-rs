@@ -1,6 +1,6 @@
 # simple-digraph
 
-A Rust library:
+A Rust library (a **preliminary release**):
 
 Simplest reference-counting directed graph library.
 
