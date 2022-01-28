@@ -4,4 +4,4 @@ A Rust library:
 
 Simplest reference-counting directed graph library.
 
-More features and tests should be added.
+More features, tests, and documentation should be added.
