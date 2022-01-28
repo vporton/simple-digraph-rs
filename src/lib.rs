@@ -10,13 +10,10 @@ pub struct DigraphNodeRef<T> {
 }
 
 impl<T> DigraphNodeRef<T> {
-    fn from(rc: Rc<DigraphNode<T>>) -> Self {
+    pub fn from(rc: Rc<DigraphNode<T>>) -> Self {
         Self {
             rc
         }
-    }
-    pub fn iter(&self) -> DigraphNodesIterator<T> {
-        DigraphNodesIterator::from(self)
     }
     pub fn remove(&mut self) {
         self.rc = self.rc.next.rc.clone()
