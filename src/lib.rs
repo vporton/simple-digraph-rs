@@ -37,24 +37,13 @@ impl<T> Deref for DigraphNodeRef<T> {
     }
 }
 
-
-pub struct DigraphNodesIterator<T> {
-    current: DigraphNodeRef<T>,
-}
-
-impl<T> DigraphNodesIterator<T> {
-    pub fn from(ptr: &DigraphNodeRef<T>) -> Self {
-        Self { current: DigraphNodeRef::from((*ptr).rc.clone()) }
-    }
-}
-
-impl<T> Iterator for DigraphNodesIterator<T> {
+impl<T> Iterator for DigraphNodeRef<T> {
     type Item = DigraphNodeRef<T>;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if Rc::strong_count(&self.current.rc) != 0 { // FIXME
-            self.current = DigraphNodeRef::from((*self.current.rc).next.rc.clone());
-            Some(self.current.clone())
+        if Rc::strong_count(&self.rc) != 0 { // FIXME
+            self.rc = (*self.rc).next.rc.clone();
+            Some(self.clone())
         } else {
             None
         }
@@ -62,7 +51,7 @@ impl<T> Iterator for DigraphNodesIterator<T> {
 }
 
 pub struct DigraphNodeValuesIterator<T> {
-    underlying: DigraphNodesIterator<T>,
+    underlying: DigraphNodeRef<T>,
 }
 
 impl<T: Clone> Iterator for DigraphNodeValuesIterator<T> {
