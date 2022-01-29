@@ -49,6 +49,12 @@ impl<T> DigraphNodeRef<T> {
     {
         self.rc.clone().map(|node| (*node).clone())
     }
+    /// TODO: Should return a reference.
+    pub fn data(&self) -> Option<T>
+        where T: Clone
+    {
+        self.rc.clone().map(|node| (*node).data.clone())
+    }
     pub fn values(self) -> DigraphNodeValuesIterator<T> {
         DigraphNodeValuesIterator {
             underlying: self.clone()
@@ -98,5 +104,17 @@ mod tests {
             list.prepend(i);
         }
         assert_eq!(list.values().collect::<Vec<i32>>(), (0..10).rev().collect::<Vec<i32>>());
+    }
+
+    #[test]
+    fn remove() {
+        let mut list = DigraphNodeRef::new();
+        for i in 0..10 {
+            list.prepend(i);
+        }
+        for _ in 0..5 {
+            list.remove();
+        }
+        assert_eq!(list.values().collect::<Vec<i32>>(), (0..5).rev().collect::<Vec<i32>>());
     }
 }
