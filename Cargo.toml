@@ -1,6 +1,6 @@
 [package]
 name = "simple-digraph"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 description = "Simplest reference-counting directed graph library"
 authors = ["Victor Porton"]

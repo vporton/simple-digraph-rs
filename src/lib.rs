@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct DigraphNode<T> {
@@ -13,7 +13,7 @@ impl<T> DigraphNode<T> {
 }
 
 pub struct DigraphNodeRef<T> {
-    rc: Option<Rc<DigraphNode<T>>>,
+    rc: Option<Arc<DigraphNode<T>>>,
 }
 
 impl<T> DigraphNodeRef<T> {
@@ -23,9 +23,9 @@ impl<T> DigraphNodeRef<T> {
         }
     }
     pub fn from_node(value: DigraphNode<T>) -> Self {
-        Self::from(Some(Rc::new(value)))
+        Self::from(Some(Arc::new(value)))
     }
-    pub fn from(rc: Option<Rc<DigraphNode<T>>>) -> Self {
+    pub fn from(rc: Option<Arc<DigraphNode<T>>>) -> Self {
         Self {
             rc
         }
@@ -69,7 +69,7 @@ impl<T> Clone for DigraphNodeRef<T> {
 }
 
 impl<T> Iterator for DigraphNodeRef<T> {
-    type Item = Rc<DigraphNode<T>>;
+    type Item = Arc<DigraphNode<T>>;
 
     fn next(&mut self) -> Option<Self::Item> {
         if let Some(rc) = self.rc.clone() {
