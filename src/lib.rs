@@ -49,9 +49,9 @@ impl<T> DigraphNodeRef<T> {
     {
         self.rc.clone().map(|node| (*node).clone())
     }
-    pub fn values(&self) -> DigraphNodeValuesIterator<T> {
+    pub fn values(self) -> DigraphNodeValuesIterator<T> {
         DigraphNodeValuesIterator {
-            underlying: (*self).clone()
+            underlying: self.clone()
         }
     }
 }
