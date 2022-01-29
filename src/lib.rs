@@ -17,7 +17,12 @@ pub struct DigraphNodeRef<T> {
 }
 
 impl<T> DigraphNodeRef<T> {
-    pub fn new(value: DigraphNode<T>) -> Self {
+    pub fn new() -> Self {
+        Self {
+            rc: None
+        }
+    }
+    pub fn from_node(value: DigraphNode<T>) -> Self {
         Self::from(Some(Rc::new(value)))
     }
     pub fn from(rc: Option<Rc<DigraphNode<T>>>) -> Self {
@@ -35,15 +40,19 @@ impl<T> DigraphNodeRef<T> {
     }
     pub fn prepend(&mut self, value: T) -> Self {
         let new_node = DigraphNode::new(self.clone(), value);
-        let new_node_ref = DigraphNodeRef::new(new_node);
+        let new_node_ref = DigraphNodeRef::from_node(new_node);
         *self = new_node_ref.clone();
         new_node_ref
     }
-    #[allow(dead_code)]
-    fn node(&self) -> Option<DigraphNode<T>>
+    pub fn node(&self) -> Option<DigraphNode<T>>
         where T: Clone
     {
         self.rc.clone().map(|node| (*node).clone())
+    }
+    pub fn values(&self) -> DigraphNodeValuesIterator<T> {
+        DigraphNodeValuesIterator {
+            underlying: (*self).clone()
+        }
     }
 }
 
@@ -78,4 +87,16 @@ impl<T: Clone> Iterator for DigraphNodeValuesIterator<T> {
     }
 }
 
-// TODO: Test.
+#[cfg(test)]
+mod tests {
+    use crate::DigraphNodeRef;
+
+    #[test]
+    fn insert() {
+        let mut list = DigraphNodeRef::new();
+        for i in 0..10 {
+            list.prepend(i);
+        }
+        assert_eq!(list.values().collect::<Vec<i32>>(), (0..10).rev().collect::<Vec<i32>>());
+    }
+}
