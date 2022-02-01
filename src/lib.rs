@@ -30,8 +30,11 @@ impl<T> DigraphNodeRef<T> {
             rc
         }
     }
-    pub fn as_rc(self) -> Option<Arc<DigraphNode<T>>> {
-        self.rc
+    pub fn as_rc(&self) -> &Option<Arc<DigraphNode<T>>> {
+        &self.rc
+    }
+    pub fn as_rc_mut(&mut self) -> &mut Option<Arc<DigraphNode<T>>> {
+        &mut self.rc
     }
     pub fn is_none(&self) -> bool {
         self.rc.is_none()
