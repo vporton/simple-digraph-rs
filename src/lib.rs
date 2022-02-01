@@ -110,6 +110,18 @@ mod tests {
     }
 
     #[test]
+    fn pass_two_times() {
+        let mut list = DigraphNodeRef::new();
+        for i in 0..10 {
+            list.prepend(i);
+        }
+        let iter = list.clone();
+        assert_eq!(iter.values().collect::<Vec<i32>>(), (0..10).rev().collect::<Vec<i32>>());
+        let iter = list.clone();
+        assert_eq!(iter.values().collect::<Vec<i32>>(), (0..10).rev().collect::<Vec<i32>>());
+    }
+
+    #[test]
     fn remove() {
         let mut list = DigraphNodeRef::new();
         for i in 0..10 {
