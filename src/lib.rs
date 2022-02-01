@@ -63,9 +63,6 @@ impl<T> DigraphNodeRef<T> {
             underlying: self.clone()
         }
     }
-    pub fn is_empty(&self) -> bool {
-        self.rc.is_none()
-    }
 }
 
 impl<T> Clone for DigraphNodeRef<T> {
