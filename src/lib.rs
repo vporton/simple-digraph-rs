@@ -30,6 +30,9 @@ impl<T> DigraphNodeRef<T> {
             rc
         }
     }
+    pub fn is_none(&self) -> bool {
+        self.rc.is_none()
+    }
     pub fn remove(&mut self) -> bool {
         if let Some(rc) = self.rc.clone() {
             self.rc = rc.next.rc.clone();
